@@ -187,15 +187,6 @@ lm(data = train.df, Years.Left ~ Age + IP + W.L. + PIP + BBper + ERA + Kper) %>%
 lm(data = train.df, Years.Left ~ Age + IP + W.L. + PIP + BBper + ERA + Kper + WHIP) %>% 
   predict.lm(newdata = test.df) %>% subtract(test.df$Years.Left) %>% raise_to_power(2) %>% sum # 2248.417
 
-# What is the RMSE on the test data? - 2.454634
-lm(data = train.df, Years.Left ~ Age + IP + W.L.) %>% 
-  predict.lm(newdata = test.df) %>% 
-  subtract(test.df$Years.Left) %>% 
-  raise_to_power(2) %>% 
-  sum %>% 
-  divide_by(nrow(test.df)) %>% 
-  raise_to_power(.5)
-
 # The best model here includes only the features Age, IP, and W.L.
 lm <- lm(data = df, Years.Left ~ Age + IP + W.L.) 
 lm %>% summary
@@ -211,6 +202,15 @@ Coefficients:
   IP           0.016933   0.001991   8.506  < 2e-16 ***
   W.L.         2.812543   0.575064   4.891 1.14e-06 ***
 "
+
+# What is the RMSE on the test data? - 2.454634
+lm %>% 
+  predict.lm(newdata = test.df) %>% 
+  subtract(test.df$Years.Left) %>% 
+  raise_to_power(2) %>% 
+  sum %>% 
+  divide_by(nrow(test.df)) %>% 
+  raise_to_power(.5)
 
 # Make predictions for current players
 # Import and format data for 2019 pitching seasons
