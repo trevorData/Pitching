@@ -36,14 +36,14 @@ df <- merge(x=seasons, y=pitchers,
 df$Years.Left <- df$To - df$Year
 
 # Summarize descriptive stats for data
-df$ERA   %>% mean # 4.310249
-df$Age   %>% mean # 29.50523
+df$ERA   %>% mean #   4.310249
+df$Age   %>% mean #  29.50523
 df$IP    %>% mean # 169.5165
-df$Kper  %>% mean # 16.707
-df$BBper %>% mean # 7.561706
-df$W.L.  %>% mean # 0.5060467
-df$WHIP  %>% mean # 1.354138
-df$PIP   %>% mean # 16.06522
+df$Kper  %>% mean #  16.707
+df$BBper %>% mean #   7.561706
+df$W.L.  %>% mean #   0.5060467
+df$WHIP  %>% mean #   1.354138
+df$PIP   %>% mean #  16.06522
 df$Years.Left %>% mean # 4.422365
 
 df$ERA   %>% sd #  0.9090519
@@ -55,6 +55,19 @@ df$W.L.  %>% sd #  0.1300825
 df$WHIP  %>% sd #  0.1610054
 df$PIP   %>% sd #  0.9343541
 df$Years.Left %>% sd # 2.875749
+
+df %>% select('ERA', 'Age', 'IP', 'Kper', 'BBper', 'W.L.', 'WHIP', 'PIP') %>% cor %>% abs %>% View
+"
+              ERA          Age         IP        Kper       BBper         W.L.        WHIP         PIP
+ERA    1.00000000  0.027782686 -0.4357884 -0.49957359  0.28723455 -0.612911912  0.83415555  0.47004913
+Age    0.02778269  1.000000000  0.1115266 -0.12468978 -0.24064645  0.003524552 -0.04717904 -0.15101036
+IP    -0.43578838  0.111526578  1.0000000  0.21323888 -0.27779251  0.354661637 -0.41592411 -0.34258627
+Kper  -0.49957359 -0.124689776  0.2132389  1.00000000  0.04067939  0.329252534 -0.54884829  0.06724681
+BBper  0.28723455 -0.240646453 -0.2777925  0.04067939  1.00000000 -0.175336874  0.52966278  0.72518879
+W.L.  -0.61291191  0.003524552  0.3546616  0.32925253 -0.17533687  1.000000000 -0.53482109 -0.31061298
+WHIP   0.83415555 -0.047179038 -0.4159241 -0.54884829  0.52966278 -0.534821089  1.00000000  0.60251035
+PIP    0.47004913 -0.151010364 -0.3425863  0.06724681  0.72518879 -0.310612983  0.60251035  1.00000000
+"
 
 # Graph smooth scatter plot for each
 scatter.smooth(x = df$Age,   y = df$Years.Left, xlab = 'Age'   , ylab = 'Years Left')
@@ -89,15 +102,14 @@ lm(data = df, Years.Left ~ PIP.z)   %>% summary # -0.06299 not significant
 # Graph simple regression coefficients
 vars     <- c('ERA', 'Age', 'IP', 'K%', 'BB%', 'W-L%', 'WHIP', 'Pit/IP')
 coef     <- c(-0.47976, -1.23009, 0.62475, 0.48724, 0.02244, 0.58836, -0.40593, -0.06299)
-coef.abs <- coef %>% abs
-coef.df  <- data.frame(vars, coef, coef.abs)
+coef.df  <- data.frame(vars, coef)
 
 # Absolute Value plot
 ggplot(coef.df) +
   geom_bar(aes(x = reorder(vars, abs(coef)), y = abs(coef), fill = vars), stat = 'identity') +
   ylab('Change (in years)') + 
   labs(title = 'Which stats best predict the length of a pitching career?', 
-       subtitle = 'Change in expected career length resulting from a 1 std dev change in each stat') +
+       subtitle = 'Change in expected career length resulting from a 1 std dev improvement in each stat') +
   theme(legend.position = 'none', 
         axis.title.x = element_blank(),
         axis.text.x = element_text(vjust = 9, size = 10, face = 'bold'),
@@ -187,6 +199,15 @@ lm(data = train.df, Years.Left ~ Age + IP + W.L. + PIP + BBper + ERA + Kper) %>%
 lm(data = train.df, Years.Left ~ Age + IP + W.L. + PIP + BBper + ERA + Kper + WHIP) %>% 
   predict.lm(newdata = test.df) %>% subtract(test.df$Years.Left) %>% raise_to_power(2) %>% sum # 2248.417
 
+# What is the RMSE on the test data? - 2.454634
+lm %>% 
+  predict.lm(newdata = test.df) %>% 
+  subtract(test.df$Years.Left) %>% 
+  raise_to_power(2) %>% 
+  sum %>% 
+  divide_by(nrow(test.df)) %>% 
+  raise_to_power(.5)
+
 # The best model here includes only the features Age, IP, and W.L.
 lm <- lm(data = df, Years.Left ~ Age + IP + W.L.) 
 lm %>% summary
@@ -202,15 +223,6 @@ Coefficients:
   IP           0.016933   0.001991   8.506  < 2e-16 ***
   W.L.         2.812543   0.575064   4.891 1.14e-06 ***
 "
-
-# What is the RMSE on the test data? - 2.454634
-lm %>% 
-  predict.lm(newdata = test.df) %>% 
-  subtract(test.df$Years.Left) %>% 
-  raise_to_power(2) %>% 
-  sum %>% 
-  divide_by(nrow(test.df)) %>% 
-  raise_to_power(.5)
 
 # Make predictions for current players
 # Import and format data for 2019 pitching seasons
@@ -228,8 +240,11 @@ current <- data.frame(current, lm %>% predict.lm(newdata = current))
 names(current)[ncol(current)] <- 'Years.Left.p'
 current$Final.Age.p <- current$Age + current$Years.Left.p
 
-# Who has the most years left? Who will be the oldest?
+# Who will retire the soonest?
 current[order(current$Years.Left.p),] %>% select(c('Player', 'Age', 'Years.Left.p', 'Final.Age.p')) %>% head(5)
+
+# Who has the most time left?
 current[order(current$Years.Left.p),] %>% select(c('Player', 'Age', 'Years.Left.p', 'Final.Age.p')) %>% tail(5)
 
+# Who will be the oldest?
 current[order(current$Age),] %>% select(c('Player', 'Age', 'Years.Left.p', 'Final.Age.p')) %>% tail(5)
