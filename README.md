@@ -34,10 +34,10 @@ Who will be the oldest?
 
 Data taken from baseball-reference
 
-Analysis/Visualizations done with R using the packages:
-dplyr
-magrittr
-ggplot2
-stringr
+Analysis/Visualizations done with R using the packages:  
+dplyr  
+magrittr  
+ggplot2  
+stringr  
 
 I would have liked to include more detailed data in the model such as avg fastaball speed and pitch selection but this information is not widely available past 2016. If anyone knows good sources for this sort of data please let me know!
