@@ -13,7 +13,7 @@ Note that the graph references an "improvement" in each stat (meaning ERA down, 
 
 ---
 
- | Mean| Std Dev  
+_ | Mean| Std Dev  
 ---|---|----  
 ERA| 4.31| 0.91  
 Age| 29.50| 4.60  
