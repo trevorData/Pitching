@@ -51,7 +51,7 @@ Here are some predictions made by the model based on performances by pitchers th
 
 **Who will retire the soonest?**  
 
- | Years Left | Final Age
+_ | Years Left | Final Age
 ---|---|---
 CC Sabathia | 0.62 |   38.62
 Jordan Zimmermann |1.23 |    34.23
@@ -61,7 +61,7 @@ Tommy Milone|  2.11|    34.11
 
 **Who will be around the longest?**
 
- | Years Left | Final Age
+_ | Years Left | Final Age
 ---|---|---
 Eduardo Rodriguez|   6.70   | 32.70
 Jack Flaherty| 6.92|    29.92
@@ -71,7 +71,7 @@ Mike Soroka|     7.64|   28.64
 
 **Who will be the oldest?**
 
- | Years Left | Final Age
+_ | Years Left | Final Age
 ---|---|---
 J.A. Happ|     2.70|    38.70
 Charlie Morton|    3.91|    38.91
