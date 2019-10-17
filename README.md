@@ -1,6 +1,6 @@
 # Which stats best predict the length of a pitching career?
 
-###[Main plot](https://i.imgur.com/QgEb4OH.png)
+### [Main plot](https://i.imgur.com/QgEb4OH.png)
 
 Looking at a single season for a pitcher, which stats give us the most information about how much longer his career will last?
 	
@@ -13,10 +13,10 @@ Note that the graph references an "improvement" in each stat (meaning ERA down, 
 
 ---
 
- | Mean| Std Dev
----|---|----
-ERA| 4.31| 0.91
-Age| 29.50| 4.60
+ | Mean| Std Dev  
+---|---|----  
+ERA| 4.31| 0.91  
+Age| 29.50| 4.60  
 Innings Pitched that Season | 169.51| 37.81
 Strikeout % | 16.70| 4.17
 Walk %| 7.56| 2.10
