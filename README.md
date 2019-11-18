@@ -1,6 +1,6 @@
 # Which stats best predict the length of a pitching career?
 
-### [Main plot](https://i.imgur.com/QgEb4OH.png)
+# [Main plot](https://i.imgur.com/QgEb4OH.png)
 
 Looking at a single season for a pitcher, which stats give us the most information about how much longer his career will last?
 	
