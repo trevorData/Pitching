@@ -7,9 +7,9 @@ Looking at a single season for a pitcher, which stats give us the most informati
 ---
 
 Based on single season data from the last 15 years for currently inactive pitchers, min 100 innings pitched.
-Y values represent the coefficients obtained from doing simple linear regression on the z score for each of the stats against the years remaining in a pitchers career.
+Y values represent the coefficients obtained from regressing the z score for each stat against the years remaining in a pitchers career.
 
-Note that the graph references an "improvement" in each stat (meaning ERA down, K% up, etc). If we measure in terms of *increasing* each stat the graph looks like [this](https://i.imgur.com/KZW27Xh.png)
+Note that the graph references an "improvement" in each stat (meaning ERA goes down, K% goes up, etc). If we measure in terms of *increasing* each stat the graph looks like [this](https://i.imgur.com/KZW27Xh.png)
 
 ---
 
@@ -45,7 +45,7 @@ For a better idea of this relationship in terms of real values take a look at th
 
 A surprisingly accurate model for career length can be made using only three predictors: Age, Innings Pitched, and W-L%
 
-The model trained here with these three predictors has an RMSE of 2.45 years (think of this as average error of prediction), and actually gets worse when you add in seemingly important stats like ERA. This is probably because there is a high correlation between W-L% and ERA, and any new information added will likely contain a lot of noise.
+The model trained here with these three predictors has an RMSE of 2.45 years (think of this as average error of prediction), and gets worse when you add in seemingly important stats like ERA. This is likely because there is a high correlation between W-L% and ERA, and any new information gained from adding ERA to the model will likely contain a lot of noise.
 
 Here are some predictions made by the model based on performances by pitchers this season:
 
